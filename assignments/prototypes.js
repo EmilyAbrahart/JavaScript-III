@@ -132,3 +132,95 @@ Humanoid.prototype.greet = function(){return `${this.name} offers a greeting in 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+
+  function Hero (gameData){
+    Humanoid.call(this, gameData);
+    this.attackPower = gameData.attackPower;
+    this.critStrike = gameData.critStrike;
+    this.armor = gameData.armor;
+  }
+  Hero.prototype = Object.create(Humanoid.prototype);
+  Hero.prototype.hDamageDone = function(){
+    let critRand = Math.random();
+    if (critRand > 1-(this.critStrike/10)){return this.attackPower*2}
+    else {return this.attackPower}
+  }
+
+  Hero.prototype.hDamageTaken = function(dmgTaken){
+    let damage = Math.round(dmgTaken - ((dmgTaken/100)*this.armor));
+    this.healthPoints = this.healthPoints - damage;
+    console.log(`${this.name} took ${damage} damage! They have ${this.healthPoints}HP remaining...`);
+  }
+
+  function Villain (gameData){
+    Humanoid.call(this, gameData);
+    this.attackPower = gameData.attackPower;
+    this.strength = gameData.strength;
+    this.leech = gameData.leech;
+  }
+
+  Villain.prototype = Object.create(Humanoid.prototype);
+
+  Villain.prototype.vDamageDone = function(){return this.attackPower + ((this.attackPower/100)*this.strength);}
+
+  Villain.prototype.vDamageTaken = function(dmgTaken){
+   let damage = dmgTaken;
+   let leechRand = Math.random();
+    if (leechRand > 1-(this.leech/10)){damage = Math.round(dmgTaken - this.leech);}
+    this.healthPoints = this.healthPoints - damage;
+    console.log(`${this.name} took ${damage} damage! They have ${this.healthPoints}HP remaining...`);
+  }
+
+
+const SuperDave = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 1,
+    height: 1,
+  },
+  healthPoints: 100,
+  name: 'SuperDave',
+  team: 'PowerPuff Girls',
+  weapons: [
+    'Staff of Friendship',
+  ],
+  language: 'Common Tongue',
+  attackPower: 3,
+  critStrike: 3,
+  armor:4,
+})
+
+const EvilErik = new Villain({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 1,
+    height: 1,
+  },
+  healthPoints: 100,
+  name: 'EvilErik',
+  team: 'Order of the Wrong Side Pedestrian',
+  weapons: [
+    'Club of Clubbing', 'Bulwark of a Silent Front'
+  ],
+  language: 'Common Tongue',
+  attackPower: 4,
+  strength: 3,
+  leech: 2,
+})
+
+// FIGHT!!
+
+function epicBattle(fighter1, fighter2){
+  console.log(`${fighter1.name} and ${fighter2.name} are ready to battle! 3... 2.... 1...... FIGHT!`);
+  let winner = '';
+  while (fighter1.healthPoints > 0 && fighter2.healthPoints > 0){
+    f1DmgDone = fighter1.hDamageDone();
+    fighter2.vDamageTaken(f1DmgDone);
+    f2DmgDone = fighter2.vDamageDone();
+    fighter1.hDamageTaken(f2DmgDone);
+  }
+  winner = fighter1.healthPoints > 0 ? fighter1.name : fighter2.name;
+  console.log(`${winner} has defeated their opponent! They are the winner!`);
+}
