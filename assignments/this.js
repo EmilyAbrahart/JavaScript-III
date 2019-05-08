@@ -45,6 +45,19 @@ SusanObj.greet();             // As the function is invoked on Person using the 
 // When used with a constructor function, 'this' refers to the specific instance of the object created by the constructor.
 
 // code example for New Binding
+function Person (pName, pAge, pFavouriteColour){
+    this.pName = pName;
+    this.pAge = pAge;
+    this.pFavouriteColour = pFavouriteColour;
+}
+
+Person.prototype.paint = function() {
+    console.log(`${this.pName} is painting a picture using the colour ${this.pFavouriteColour}!`);
+    console.log(this);
+}
+
+const Bob = new Person('Bob', 58, 'green');
+Bob.paint();
 
 // Principle 4
 // Explicit Binding
