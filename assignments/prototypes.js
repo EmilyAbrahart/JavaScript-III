@@ -186,9 +186,9 @@ const SuperDave = new Hero({
     'Staff of Friendship',
   ],
   language: 'Common Tongue',
-  attackPower: 3,
+  attackPower: 4,
   critStrike: 3,
-  armor:4,
+  armor:7,
 })
 
 const EvilErik = new Villain({
@@ -200,14 +200,14 @@ const EvilErik = new Villain({
   },
   healthPoints: 100,
   name: 'EvilErik',
-  team: 'Order of the Wrong Side Pedestrian',
+  team: 'Order of the Wrong Side Pedestrian',  
   weapons: [
     'Club of Clubbing', 'Bulwark of a Silent Front'
   ],
   language: 'Common Tongue',
   attackPower: 4,
   strength: 3,
-  leech: 2,
+  leech: 3,
 })
 
 // FIGHT!!
