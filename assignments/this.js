@@ -57,10 +57,13 @@ Person.prototype.paint = function() {
 }
 
 const Bob = new Person('Bob', 58, 'green');
-Bob.paint();
+const Maggie = new Person('Maggie', 40, 'purple')
+Bob.paint();                    //'this' will refer to the object Bob.
+Maggie.paint();
 
 // Principle 4
 // Explicit Binding
 // The 'call', 'apply' and 'bind' methods can be used to explicitly define where 'this' references to.
 
 // code example for Explicit Binding
+Bob.paint.call(Maggie);         // Whereas previous for Bob, 'this' referred to the object Bob, .call has allowed us to set 'this' to refer to the object Maggie instead, console logging her name and favourite colour.
